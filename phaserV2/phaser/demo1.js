@@ -7,12 +7,12 @@ var newGame = true;
 var bala, balaD=false, nave;
 var bala2, balaD2 = false, nave2;
 
-var salto, izquierda, derecha;
+var salto, izquierda, derecha, direccion;
 var menu;
 
 var velocidadBala;
 var despBala;
-var velocidadBala2;
+var velocidadBala2 = 303;
 var despBala2;
 var estatusAire;
 var estatuSuelo;
@@ -81,12 +81,22 @@ function enRedNeural(){
 
 function datosDeEntrenamiento(param_entrada){
 
-    console.log("Entrada",param_entrada[0]+" "+param_entrada[1]);
+    // console.log("Entrada",param_entrada[0]+" "+param_entrada[1]);
     nnSalida = nnNetwork.activate(param_entrada);
     var aire=Math.round( nnSalida[0]*100 );
     var piso=Math.round( nnSalida[1]*100 );
-    console.log("Valor ","En el Aire %: "+ aire + " En el suelo %: " + piso );
+    // console.log("Valor ","En el Aire %: "+ aire + " En el suelo %: " + piso );
     return nnSalida[0]>=nnSalida[1];
+}
+
+function datosDeEntrenamientoBala2(param_entrada){
+
+    console.log("Entrada2",param_entrada[0]+" "+param_entrada[1]);
+    nnSalida = nnNetwork.activate(param_entrada);
+    var aire2=Math.round( nnSalida[0]*100 );
+    var piso2=Math.round( nnSalida[1]*100 );
+    console.log("Valor ","En el Aire %: "+ aire2 + " En el suelo %: " + piso2 );
+    return nnSalida[0]<=nnSalida[1];
 }
 
 
@@ -134,9 +144,9 @@ function resetVariables(){
     jugador.body.velocity.y=0;
     bala.body.velocity.x = 0;
     bala.position.x = w-100;
-    bala2.body.velocity.y = 0;
+    bala2.body.velocity.y = velocidadBala2;
     bala2.position.y = h-350;
-    bala2.position.x = nave2.position.x;
+    bala2.position.x = jugador.position.x + Math.random(-1, 1);
     balaD=false;
 }
 
@@ -168,6 +178,7 @@ function update() {
     fondo.tilePosition.x -= 1; 
 
     juego.physics.arcade.collide(bala, jugador, colisionH, null, this);
+    // juego.physics.arcade.collide(bala2, jugador, colisionH, null, this);
 
     estatuSuelo = 1;
     estatusAire = 0;
@@ -194,6 +205,22 @@ function update() {
     }
     
     if( modoAuto == true  && bala.position.x>0 && jugador.body.onFloor()) {
+
+        if( datosDeEntrenamientoBala2( [despBala2 , velocidadBala2] )  ){
+             
+            //Condicion para saber si la bala esta a la derecha o izquierda del jugador
+            if( jugador.body.position.x > bala2.position.x ){
+                moverIzquierda();
+            } else {
+                moverDerecha();
+            }
+
+            // if( jugador.body.position.x < bala2.position.x ){
+            //     moverDerecha(); 
+            // } else {
+            //     moverIzquierda();
+            // }
+        }
 
         if( datosDeEntrenamiento( [despBala , velocidadBala] )  ){
             saltar();
