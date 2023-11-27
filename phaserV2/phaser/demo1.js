@@ -4,6 +4,7 @@ var jugador;
 var fondo;
 
 var bala, balaD=false, nave;
+var bala2, balaD2 = false, nave2;
 
 var salto, izquierda, derecha;
 var menu;
@@ -39,7 +40,9 @@ function create() {
 
     fondo = juego.add.tileSprite(0, 0, w, h, 'fondo');
     nave = juego.add.sprite(w-100, h-70, 'nave');
+    nave2 = juego.add.sprite(20, h-400, 'nave');
     bala = juego.add.sprite(w-100, h, 'bala');
+    bala2 = juego.add.sprite(55, h-350, 'bala');
     jugador = juego.add.sprite(50, h, 'mono');
 
 
@@ -50,6 +53,9 @@ function create() {
 
     juego.physics.enable(bala);
     bala.body.collideWorldBounds = true;
+
+    juego.physics.enable(bala2);
+    bala2.body.collideWorldBounds = true;
 
     pausaL = juego.add.text(w - 100, 20, 'Pausa', { font: '20px Arial', fill: '#fff' });
     pausaL.inputEnabled = true;
@@ -124,6 +130,9 @@ function resetVariables(){
     jugador.body.velocity.y=0;
     bala.body.velocity.x = 0;
     bala.position.x = w-100;
+    bala2.body.velocity.y = 0;
+    bala2.position.y = h-350;
+    bala2.position.x = nave2.position.x;
     balaD=false;
 }
 
@@ -133,11 +142,13 @@ function saltar(){
 }
 
 function moverIzquierda(){
-    jugador.body.position.x += -5;
+    jugador.body.position.x -= 5;
+    nave2.position.x -= 5;
 }
 
 function moverDerecha(){
     jugador.body.position.x += 5;
+    nave2.position.x += 5;
 }
 
 
