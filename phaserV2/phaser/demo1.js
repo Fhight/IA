@@ -2,6 +2,7 @@ var w=800;
 var h=400;
 var jugador;
 var fondo;
+var newGame = true;
 
 var bala, balaD=false, nave;
 var bala2, balaD2 = false, nave2;
@@ -11,6 +12,8 @@ var menu;
 
 var velocidadBala;
 var despBala;
+var velocidadBala2;
+var despBala2;
 var estatusAire;
 var estatuSuelo;
 
@@ -107,6 +110,7 @@ function mPausa(event){
                 eCompleto=false;
                 datosEntrenamiento = [];
                 modoAuto = false;
+                newGame = true;
             }else if (mouse_x >=menu_x1 && mouse_x <=menu_x2 && mouse_y >=menu_y1+90 && mouse_y <=menu_y2) {
                 if(!eCompleto) {
                     console.log("","Entrenamiento "+ datosEntrenamiento.length +" valores" );
@@ -154,6 +158,13 @@ function moverDerecha(){
 
 function update() {
 
+    if(newGame){
+        newGame = false;
+        jugador.body.position.x = 50;
+        nave2.position.x = 50;
+        bala2.position.x = 50;
+    }
+
     fondo.tilePosition.x -= 1; 
 
     juego.physics.arcade.collide(bala, jugador, colisionH, null, this);
@@ -167,6 +178,8 @@ function update() {
     }
 	
     despBala = Math.floor( jugador.position.x - bala.position.x );
+    //Devuelve cuanto falta para que la bala impacte al jugador
+    despBala2 = Math.floor( jugador.position.y - bala2.position.y );
 
     if( modoAuto==false && izquierda.isDown &&  jugador.body.onFloor() ){
         moverIzquierda();
@@ -202,8 +215,8 @@ function update() {
                 'output':  [estatusAire , estatuSuelo ]  
         });
 
-        console.log("Desplazamiento Bala, Velocidad Bala, Estatus, Estatus: ",
-            despBala + " " +velocidadBala + " "+ estatusAire+" "+  estatuSuelo);
+        // console.log("Desplazamiento Bala, Velocidad Bala, Estatus, Estatus: ",
+        //     despBala + " " +velocidadBala + " "+ estatusAire+" "+  estatuSuelo);
    }
 
 }
