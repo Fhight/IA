@@ -176,6 +176,10 @@ function update() {
         nave2.position.x = 50;
         bala2.position.x = 50;
     }
+    if(bala2.position.y >= 365){
+        bala2.position.y = 365;        
+        bala2.position.x = 750;        
+    }
 
     fondo.tilePosition.x -= 1; 
 
@@ -194,6 +198,8 @@ function update() {
     //Devuelve cuanto falta para que la bala impacte al jugador
     despBala2 = Math.floor( jugador.position.y - bala2.position.y );
     despBala2x = Math.floor( jugador.position.x - bala2.position.x );
+
+    console.log(direccion)
 
     if( modoAuto==false && izquierda.isDown &&  jugador.body.onFloor() ){
         moverIzquierda();
@@ -219,27 +225,29 @@ function update() {
         if( datosDeEntrenamientoBala2( [despBala2 , velocidadBala2] )  ){    
             //Checar direccion del jugador             
             if(direccion == 2){
+                // //Checar si la bala esta en el aire
+                // if(bala2.position.y < jugador.position.y){
+                //     moverDerecha();
+                // }
+                // else {
+                //     //Checar si la bala esta a la derecha del jugador
+                //     if(despBala2x < 0){
+                //         moverDerecha();
+                //     }
+                // }
+                moverDerecha();
+            }else{
                 //Checar si la bala esta en el aire
-                if(bala2.position.y < jugador.position.y){
-                    moverDerecha();
-                }
-                else {
-                    //Checar si la bala esta a la derecha del jugador
-                    if(despBala2x < 0){
-                        moverDerecha();
-                    }
-                }
-            }else if(direccion == 1){
-                //Checar si la bala esta en el aire
-                if(bala2.position.y < jugador.position.y){
-                    moverIzquierda();
-                }
-                else {
-                    //Checar si la bala esta a la izquierda del jugador
-                    if(despBala2x > 0){
-                        moverIzquierda();
-                    }
-                }
+                // if(bala2.position.y < jugador.position.y){
+                //     moverIzquierda();
+                // }
+                // else {
+                //     //Checar si la bala esta a la izquierda del jugador
+                //     if(despBala2x > 0){
+                //         moverIzquierda();
+                //     }
+                // }
+                moverIzquierda();
             }
         }
 
