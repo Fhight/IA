@@ -12,7 +12,7 @@ var menu;
 
 var velocidadBala;
 var despBala;
-var velocidadBala2 = 303;
+var velocidadBala2 = 203;
 var despBala2;
 var despBala2x;
 var estatusAire;
@@ -123,6 +123,7 @@ function mPausa(event){
                 modoAuto = false;
                 newGame = true;
             }else if (mouse_x >=menu_x1 && mouse_x <=menu_x2 && mouse_y >=menu_y1+90 && mouse_y <=menu_y2) {
+                newGame = true;
                 if(!eCompleto) {
                     console.log("","Entrenamiento "+ datosEntrenamiento.length +" valores" );
                     enRedNeural();
@@ -145,10 +146,17 @@ function resetVariables(){
     jugador.body.velocity.y=0;
     bala.body.velocity.x = 0;
     bala.position.x = w-100;
+    // bala2.body.velocity.y = velocidadBala2;
+    // bala2.position.y = h-350;
+    // bala2.position.x = jugador.position.x + Math.random(-1, 1);
+    balaD=false;
+    // balaD2=false;
+}
+
+function resetDisparo(){
     bala2.body.velocity.y = velocidadBala2;
     bala2.position.y = h-350;
     bala2.position.x = jugador.position.x + Math.random(-1, 1);
-    balaD=false;
     balaD2=false;
 }
 
@@ -175,11 +183,12 @@ function update() {
         jugador.body.position.x = 50;
         nave2.position.x = 50;
         bala2.position.x = 50;
+        bala2.position.y = h-350;
     }
-    if(bala2.position.y >= 365){
-        bala2.position.y = 365;        
-        bala2.position.x = 750;        
-    }
+    // if(bala2.position.y >= 365){
+    //     bala2.position.y = 365;        
+    //     bala2.position.x = 750;        
+    // }
 
     fondo.tilePosition.x -= 1; 
 
@@ -193,7 +202,7 @@ function update() {
         estatuSuelo = 0;
         estatusAire = 1;
     }
-	
+	bala2.body.velocity.y = velocidadBala2;
     despBala = Math.floor( jugador.position.x - bala.position.x );
     //Devuelve cuanto falta para que la bala impacte al jugador
     despBala2 = Math.floor( jugador.position.y - bala2.position.y );
@@ -202,15 +211,37 @@ function update() {
     console.log(direccion)
 
     if( modoAuto==false && izquierda.isDown &&  jugador.body.onFloor() ){
-        moverIzquierda();
+        if(salto.isDown){
+            moverIzquierda();
+            saltar();
+        }
+        else{
+            moverIzquierda();
+        }        
     }
 
     if( modoAuto==false && derecha.isDown &&  jugador.body.onFloor() ){
-        moverDerecha();
+        if(salto.isDown){
+            moverDerecha();
+            saltar();
+        }
+        else{
+            moverDerecha();
+        }
     }
 
     if( modoAuto==false && salto.isDown &&  jugador.body.onFloor() ){
-        saltar();
+        if(derecha.isDown){
+            moverDerecha();
+            saltar();
+        }
+        else if(izquierda.isDown){
+            moverIzquierda();
+            saltar();
+        }
+        else{
+            saltar();
+        }
     }
 
     if(jugador.body.position.x > 300){
@@ -235,6 +266,7 @@ function update() {
                 //         moverDerecha();
                 //     }
                 // }
+                if(bala2.position.y < 300)
                 moverDerecha();
             }else{
                 //Checar si la bala esta en el aire
@@ -247,6 +279,7 @@ function update() {
                 //         moverIzquierda();
                 //     }
                 // }
+                if(bala2.position.y < 300)
                 moverIzquierda();
             }
         }
@@ -262,6 +295,14 @@ function update() {
 
     if( bala.position.x <= 0  ){
         resetVariables();
+    }
+
+    if( balaD2==false ){ 
+        disparo2();
+    }
+
+    if(bala2.position.y >= 365){
+        resetDisparo();
     }
     
     if( modoAuto ==false  && bala.position.x > 0 ){
@@ -279,10 +320,15 @@ function update() {
 
 
 function disparo(){
-    velocidadBala =  -1 * velocidadRandom(300,800);
+    velocidadBala =  -1 * velocidadRandom(300,400);
     bala.body.velocity.y = 0 ;
     bala.body.velocity.x = velocidadBala ;
     balaD=true;
+    balaD2=true;
+}
+
+function disparo2(){
+    bala2.body.velocity.y = velocidadBala2;
     balaD2=true;
 }
 
