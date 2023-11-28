@@ -266,8 +266,8 @@ function update() {
                 //         moverDerecha();
                 //     }
                 // }
-                if(bala2.position.y < 300)
-                moverDerecha();
+                if(bala2.position.y < 300) moverDerecha();
+                else if (despBala2x < 40) moverDerecha();
             }else{
                 //Checar si la bala esta en el aire
                 // if(bala2.position.y < jugador.position.y){
@@ -279,8 +279,8 @@ function update() {
                 //         moverIzquierda();
                 //     }
                 // }
-                if(bala2.position.y < 300)
-                moverIzquierda();
+                if(bala2.position.y < 300) moverIzquierda();
+                else if(despBala2x > -40) moverIzquierda();
             }
         }
 
