@@ -6,14 +6,15 @@ var newGame = true;
 
 var bala, balaD=false, nave;
 var bala2, balaD2 = false, nave2;
-
-var salto, izquierda, derecha, direccion;
+//Direccion 1=izquierda 2=derecha
+var salto, izquierda, derecha, direccion = 1;
 var menu;
 
 var velocidadBala;
 var despBala;
 var velocidadBala2 = 303;
 var despBala2;
+var despBala2x;
 var estatusAire;
 var estatuSuelo;
 
@@ -148,6 +149,7 @@ function resetVariables(){
     bala2.position.y = h-350;
     bala2.position.x = jugador.position.x + Math.random(-1, 1);
     balaD=false;
+    balaD2=false;
 }
 
 
@@ -178,7 +180,7 @@ function update() {
     fondo.tilePosition.x -= 1; 
 
     juego.physics.arcade.collide(bala, jugador, colisionH, null, this);
-    // juego.physics.arcade.collide(bala2, jugador, colisionH, null, this);
+    juego.physics.arcade.collide(bala2, jugador, colisionH, null, this);
 
     estatuSuelo = 1;
     estatusAire = 0;
@@ -191,6 +193,7 @@ function update() {
     despBala = Math.floor( jugador.position.x - bala.position.x );
     //Devuelve cuanto falta para que la bala impacte al jugador
     despBala2 = Math.floor( jugador.position.y - bala2.position.y );
+    despBala2x = Math.floor( jugador.position.x - bala2.position.x );
 
     if( modoAuto==false && izquierda.isDown &&  jugador.body.onFloor() ){
         moverIzquierda();
@@ -203,23 +206,41 @@ function update() {
     if( modoAuto==false && salto.isDown &&  jugador.body.onFloor() ){
         saltar();
     }
+
+    if(jugador.body.position.x > 300){
+        direccion = 1;
+    }
+    if(jugador.body.position.x < 105){
+        direccion = 2;
+    }
     
     if( modoAuto == true  && bala.position.x>0 && jugador.body.onFloor()) {
 
-        if( datosDeEntrenamientoBala2( [despBala2 , velocidadBala2] )  ){
-             
-            //Condicion para saber si la bala esta a la derecha o izquierda del jugador
-            if( jugador.body.position.x > bala2.position.x ){
-                moverIzquierda();
-            } else {
-                moverDerecha();
+        if( datosDeEntrenamientoBala2( [despBala2 , velocidadBala2] )  ){    
+            //Checar direccion del jugador             
+            if(direccion == 2){
+                //Checar si la bala esta en el aire
+                if(bala2.position.y < jugador.position.y){
+                    moverDerecha();
+                }
+                else {
+                    //Checar si la bala esta a la derecha del jugador
+                    if(despBala2x < 0){
+                        moverDerecha();
+                    }
+                }
+            }else if(direccion == 1){
+                //Checar si la bala esta en el aire
+                if(bala2.position.y < jugador.position.y){
+                    moverIzquierda();
+                }
+                else {
+                    //Checar si la bala esta a la izquierda del jugador
+                    if(despBala2x > 0){
+                        moverIzquierda();
+                    }
+                }
             }
-
-            // if( jugador.body.position.x < bala2.position.x ){
-            //     moverDerecha(); 
-            // } else {
-            //     moverIzquierda();
-            // }
         }
 
         if( datosDeEntrenamiento( [despBala , velocidadBala] )  ){
@@ -254,6 +275,7 @@ function disparo(){
     bala.body.velocity.y = 0 ;
     bala.body.velocity.x = velocidadBala ;
     balaD=true;
+    balaD2=true;
 }
 
 function colisionH(){
