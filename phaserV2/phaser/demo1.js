@@ -144,35 +144,27 @@ function mPausa(event){
 function resetVariables(){
     jugador.body.velocity.x=0;
     jugador.body.velocity.y=0;
+    jugador.body.position.x = 50;
+
     bala.body.velocity.x = 0;
     bala.position.x = w-100;
+
+    bala2.body.velocity.y = velocidadBala2;
+    bala2.position.y = h-350;
     // bala2.body.velocity.y = velocidadBala2;
     // bala2.position.y = h-350;
     // bala2.position.x = jugador.position.x + Math.random(-1, 1);
+    balaD2=false;
     balaD=false;
     // balaD2=false;
 }
-
-function resetDisparo(){
-    bala2.body.velocity.y = velocidadBala2;
-    bala2.position.y = h-350;
-    bala2.position.x = jugador.position.x + Math.random(-1, 1);
-    balaD2=false;
-}
-
 
 function saltar(){
     jugador.body.velocity.y = -270;
 }
 
-function moverIzquierda(){
-    jugador.body.position.x -= 5;
-    nave2.position.x -= 5;
-}
-
 function moverDerecha(){
     jugador.body.position.x += 5;
-    nave2.position.x += 5;
 }
 
 
@@ -185,10 +177,6 @@ function update() {
         bala2.position.x = 50;
         bala2.position.y = h-350;
     }
-    // if(bala2.position.y >= 365){
-    //     bala2.position.y = 365;        
-    //     bala2.position.x = 750;        
-    // }
 
     fondo.tilePosition.x -= 1; 
 
@@ -207,8 +195,6 @@ function update() {
     //Devuelve cuanto falta para que la bala impacte al jugador
     despBala2 = Math.floor( jugador.position.y - bala2.position.y );
     despBala2x = Math.floor( jugador.position.x - bala2.position.x );
-
-    console.log(direccion)
 
     if( modoAuto==false && izquierda.isDown &&  jugador.body.onFloor() ){
         if(salto.isDown){
@@ -243,45 +229,11 @@ function update() {
             saltar();
         }
     }
-
-    if(jugador.body.position.x > 300){
-        direccion = 1;
-    }
-    if(jugador.body.position.x < 105){
-        direccion = 2;
-    }
     
     if( modoAuto == true  && bala.position.x>0 && jugador.body.onFloor()) {
 
         if( datosDeEntrenamientoBala2( [despBala2 , velocidadBala2] )  ){    
-            //Checar direccion del jugador             
-            if(direccion == 2){
-                // //Checar si la bala esta en el aire
-                // if(bala2.position.y < jugador.position.y){
-                //     moverDerecha();
-                // }
-                // else {
-                //     //Checar si la bala esta a la derecha del jugador
-                //     if(despBala2x < 0){
-                //         moverDerecha();
-                //     }
-                // }
-                if(bala2.position.y < 300) moverDerecha();
-                else if (despBala2x < 40) moverDerecha();
-            }else{
-                //Checar si la bala esta en el aire
-                // if(bala2.position.y < jugador.position.y){
-                //     moverIzquierda();
-                // }
-                // else {
-                //     //Checar si la bala esta a la izquierda del jugador
-                //     if(despBala2x > 0){
-                //         moverIzquierda();
-                //     }
-                // }
-                if(bala2.position.y < 300) moverIzquierda();
-                else if(despBala2x > -40) moverIzquierda();
-            }
+            moverDerecha();
         }
 
         if( datosDeEntrenamiento( [despBala , velocidadBala] )  ){
@@ -299,10 +251,6 @@ function update() {
 
     if( balaD2==false ){ 
         disparo2();
-    }
-
-    if(bala2.position.y >= 365){
-        resetDisparo();
     }
     
     if( modoAuto ==false  && bala.position.x > 0 ){
