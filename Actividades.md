@@ -1,4 +1,4 @@
-# Introducción a la Inteligencia Artificial Actividad
+# 1. Introducción a la Inteligencia Artificial Actividad
 
 ## Practica 1
 
@@ -74,9 +74,15 @@
 
 #### Documental IA
 
-# Introducción a la Inteligencia Artificial: Tipos de Inteligencia.
+# 2. Introducción a la Inteligencia Artificial: Tipos de Inteligencia.
 
 ## Ensayo
+
+### Introducción
+
+> La teoría de las inteligencias múltiples, desarrollada por el psicólogo Howard Gardner en la década de 1980, representa un cambio paradigmático en la comprensión tradicional de la inteligencia humana. A diferencia de la visión clásica que asocia la inteligencia con una única capacidad cognitiva general, Gardner propone que la inteligencia es un fenómeno multifacético y que cada individuo posee una combinación única de habilidades intelectuales. Su teoría ha tenido un impacto significativo en la educación y la psicología, desafiando las concepciones convencionales y promoviendo una apreciación más completa de la diversidad de las capacidades humanas.
+
+### Desarrollo
 
 > La teoría de Gardner propone diversos tipos de inteligencias que revolucionaron la forma de entender las habilidades humanas y el aprendizaje.
 > Hoy en día, cuando mencionamos la inteligencia, es natural pensar en el coeficiente intelectual y en las pruebas psicométricas convencionales que la miden de manera uniforme. Sin embargo, en los años 80 surgió una hipótesis alternativa que sacudió los cimientos de la psicología cognitiva: las Inteligencias Múltiples de Gardner.
@@ -127,7 +133,11 @@
 > > 12. **Inteligencia emocional**
 > >     Este tipo de inteligencia guarda relación con la habilidad para gestionar las emociones. Las personas con esta capacidad suelen disfrutar de un mejor estado psicológico en comparación con la media, ya que saben afrontar los conflictos y situaciones difíciles desde la templanza. Además, son hábiles a la hora de interactuar con los demás y comprender cómo se pueden sentir. La inteligencia emocional ha comenzado a ser muy valorada en los últimos años, ya que esta parece guardar una estrecha relación con el éxito laboral y la salud.
 
-# Introducción a la Inteligencia Artificial: Introspección
+### Conclusión
+
+> En conclusión, la teoría de las inteligencias múltiples representa una contribución significativa al campo de la psicología y la educación. Gardner ha desafiado la visión tradicional y unidimensional de la inteligencia, proponiendo una concepción más rica y compleja que reconoce y valora las diversas habilidades humanas. Su teoría ha influido en la forma en que entendemos y abordamos la enseñanza y el aprendizaje, promoviendo un enfoque más inclusivo y centrado en el estudiante. A medida que la investigación continúa y la teoría evoluciona, la noción de inteligencias múltiples sigue siendo un terreno fértil para la exploración y la reflexión sobre la diversidad inherente a la condición humana.
+
+# 3. Introducción a la Inteligencia Artificial: Introspección
 
 ## Ensayo
 
@@ -195,4 +205,163 @@
 > Con esto se puede concluir que el número mínimo de movimientos para pasar los alfiles de un color al otro es de 36, ya que se debe mover cada uno de ellos 3 veces para llegar a la casilla central, y luego moverlos nuevamente para llegar a la casilla final, y así sucesivamente hasta que todos los alfiles hayan cambiado de color.
 > Con esto nos damos cuenta de la numerosa cantidad de movimientos que se tienen que realizar para llegar a la solución, y que a pesar de que se puede llegar a la solución de manera más rápida, se debe tener en cuenta que no se puede atacar a ningún alfil del color opuesto, por lo que se debe tener cuidado con los movimientos que se realizan.
 
-# Introducción a la Inteligencia Artificial: Introspección
+# 4. Introducción a la Inteligencia Artificial: Introspección
+
+## Ensayo
+
+### Introducción
+
+> Los métodos iterativos y recursivos son dos enfoques fundamentales en programación que permiten resolver problemas de manera eficiente y elegante. Cada uno tiene sus propias características, ventajas y limitaciones, y la elección entre ellos a menudo depende de la naturaleza del problema y las preferencias del programador. En este artículo, se presentan los conceptos básicos de los métodos iterativos y recursivos, y se plantea un ejemplo aplicando ambos métodos.
+
+### Desarrollo
+
+> **Métodos iterativos**
+> En la programación iterativa, se utiliza un bucle (por ejemplo, bucle for o while) para repetir un bloque de código hasta que se cumple una condición de salida. Este enfoque se basa en la repetición de instrucciones y es particularmente útil cuando se conoce de antemano el número de repeticiones necesarias. Los métodos iterativos suelen ser más eficientes en términos de uso de la memoria y son adecuados para resolver problemas que involucran procesos repetitivos y controlables.
+>
+> **Métodos recursivos**
+> La programación recursiva implica la división de un problema en subproblemas más pequeños y la resolución recursiva de esos subproblemas. En lugar de usar bucles, un método recursivo invoca a sí mismo para abordar instancias más pequeñas del problema hasta llegar a un caso base que no requiere más subdivisión. Los métodos recursivos son notables por su simplicidad conceptual y la capacidad de abordar problemas complejos de manera elegante. Sin embargo, pueden ser menos eficientes en términos de uso de la memoria y pueden enfrentar problemas de desbordamiento de pila si no se manejan adecuadamente.
+>
+> **Diferencias**
+>
+> La elección entre métodos iterativos y recursivos a menudo depende de factores como la claridad del código, la naturaleza del problema y las limitaciones de rendimiento. Los métodos iterativos suelen ser preferidos en situaciones donde la eficiencia y el control preciso del flujo son cruciales, mientras que los métodos recursivos destacan en problemas que se prestan naturalmente a la subdivisión y donde la simplicidad y la elegancia son objetivos importantes.
+>
+> **Ejemplo**
+> Se solicita un programa el cual pueda calcular el número total de islas que se encuentra dentro de un tablero de NxM dimensiones, donde cada casilla representa una isla, y se debe tener en cuenta que las islas se encuentran conectadas por las esquinas, es decir, si una isla se encuentra en la casilla A1, esta se encuentra conectada con la casilla A2 y B1, pero no con la casilla B2, ya que esta se encuentra conectada por los lados.
+>
+> Para este problema utilizaremos el siguiente tablero de 10x10, el cual esta configurado de la siguiente manera:
+> ![Tablero](/img/TableroIslas.png 'Tablero utilizado para la solución del problema')
+>
+> Para la solución de este problema se utilizaran tanto el método recursivo como el iterativo, para así poder comparar los resultados obtenidos y ver cual de los dos métodos es más eficiente para la solución de este problema.
+>
+> **Método iterativo**
+>
+> > Para la solución de este problema se utilizara el método iterativo, el cual consiste en recorrer cada una de las casillas del tablero, y si esta se encuentra ocupada, se procederá a verificar si las casillas que se encuentran a su alrededor también se encuentran ocupadas, y si es así, se procederá a verificar si estas casillas se encuentran conectadas por las esquinas, y si es así, se procederá a marcarlas como visitadas, y se continuara con la siguiente casilla, y así sucesivamente hasta que se hayan recorrido todas las casillas del tablero.
+> >
+> > Para la solución de este problema se utilizara el siguiente código:
+> >
+> > ```python
+> >   TABLERO = [
+> >   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+> >   [0, 1, 1, 0, 0, 0, 1, 1, 0, 0],
+> >   [0, 1, 1, 0, 0, 0, 1, 1, 0, 0],
+> >   [0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+> >   [0, 1, 0, 2, 2, 2, 0, 0, 2, 0],
+> >   [0, 1, 0, 2, 2, 2, 0, 0, 0, 0],
+> >   [0, 0, 0, 0, 2, 2, 0, 0, 0, 0],
+> >   [0, 3, 3, 0, 0, 0, 2, 2, 2, 0],
+> >   [0, 3, 3, 0, 0, 0, 2, 2, 0, 0],
+> >   [0, 0, 0, 0, 0, 0, 2, 2, 0, 0],
+> >      ]
+> >
+> > COLORES_ISLAS = []
+> >
+> > def islasIterativo(tablero, colores):
+> > islas = 0
+> >   for i in range(len(tablero)):
+> >       for j in range(len(tablero[i])):
+> >           if tablero[i][j] != 0:
+> >               if tablero[i][j] not in colores:
+> >                   colores.append(tablero[i][j])
+> >               islas += 1
+> >               eliminar_isla(tablero, i, j)
+> >   return [islas, colores]
+> >
+> > def eliminar_isla(tablero, i, j):
+> >   if i < 0 or j < 0 or i >= len(tablero) or j >= len(tablero[i]):
+> >       return
+> >   if tablero[i][j] == 0:
+> >       return
+> >   tablero[i][j] = 0
+> >   eliminar_isla(tablero, i, j + 1)
+> >   eliminar_isla(tablero, i, j - 1)
+> >   eliminar_isla(tablero, i + 1, j)
+> >   eliminar_isla(tablero, i - 1, j)
+> >
+> > resultado = islasIterativo(TABLERO, COLORES_ISLAS)
+> > print("Hay", resultado[0], "islas")
+> > print("Hay:", resultado[1].__len__(), "colores")
+> > ```
+> >
+> > El cual nos daría como resultado lo siguiente:
+> >
+> > ```python
+> > Hay 4 islas
+> > Hay: 3 colores
+> > ```
+> >
+> > Como se puede observar, el método iterativo nos da como resultado que hay 4 islas en el tablero, y que hay 3 colores, los cuales son el 1, 2 y 3.
+>
+> **Método recursivo**
+>
+> > Para la solución de este problema se utilizara el método recursivo, el cual consiste en recorrer cada una de las casillas del tablero, y si esta se encuentra ocupada, se procederá a verificar si las casillas que se encuentran a su alrededor también se encuentran ocupadas, y si es así, se procederá a verificar si estas casillas se encuentran conectadas por las esquinas, y si es así, se procederá a marcarlas como visitadas, y se continuara con la siguiente casilla, y así sucesivamente hasta que se hayan recorrido todas las casillas del tablero, utilizando unicamente un funcion que englobe todo el proceso.
+> >
+> > Para la solución de este problema se utilizara el siguiente código:
+> >
+> > ```python
+> > TABLERO = [
+> >   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+> >   [0, 1, 1, 0, 0, 0, 1, 1, 0, 0],
+> >   [0, 1, 1, 0, 0, 0, 1, 1, 0, 0],
+> >   [0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+> >   [0, 1, 0, 2, 2, 2, 0, 0, 2, 0],
+> >   [0, 1, 0, 2, 2, 2, 0, 0, 0, 0],
+> >   [0, 0, 0, 0, 2, 2, 0, 0, 0, 0],
+> >   [0, 3, 3, 0, 0, 0, 2, 2, 2, 0],
+> >   [0, 3, 3, 0, 0, 0, 2, 2, 0, 0],
+> >   [0, 0, 0, 0, 0, 0, 2, 2, 0, 0],
+> >      ]
+> >
+> > COLORES_ISLAS = []
+> >
+> > def islasRecursivo(tablero, colores):
+> >
+> >    def eliminar_isla(i, j):
+> >        if i < 0 or j < 0 or i >= len(tablero) or j >= len(tablero[i]):
+> >            return
+> >        if tablero[i][j] == 0:
+> >           return
+> >        tablero[i][j] = 0
+> >        eliminar_isla(i, j + 1)
+> >        eliminar_isla(i, j - 1)
+> >        eliminar_isla(i + 1, j)
+> >        eliminar_isla(i - 1, j)
+> >
+> >    def contar_islas(i, j):
+> >        if i < len(tablero):
+> >            if j < len(tablero[i]):
+> >                if tablero[i][j] != 0:
+> >                    if tablero[i][j] not in colores:
+> >                        colores.append(tablero[i][j])
+> >                    eliminar_isla(i, j)
+> >                    return 1 + contar_islas(i, j + 1)
+> >                else:
+> >                    return contar_islas(i, j + 1)
+> >            else:
+> >                return contar_islas(i + 1, 0)
+> >        else:
+> >            return 0
+> >
+> >    islas = contar_islas(0, 0)
+> >    return [islas, colores]
+> >
+> >    resultado = islasRecursivo(TABLERO, COLORES_ISLAS)
+> >    print("Método recursivo")
+> >    print("Hay", resultado[0], "islas")
+> >    print("Hay:", resultado[1].__len__(), "colores")
+> > ```
+> >
+> > El cual nos daría como resultado lo siguiente:
+> >
+> > ```python
+> > Método recursivo
+> > Hay 4 islas
+> > Hay: 3 colores
+> > ```
+> >
+> > Como se puede observar, el método recursivo nos da como resultado que hay 4 islas en el tablero, y que hay 3 colores, los cuales son el 1, 2 y 3.
+
+### **Conclusión**
+
+> > Como se puede observar, tanto el método iterativo como el recursivo nos dan el mismo resultado, por lo que se puede decir que ambos métodos son igual de eficientes para la solución de este problema, sin embargo, se puede decir que el método iterativo es más eficiente en cuanto al uso de memoria, ya que este solo utiliza un bucle para recorrer el tablero, mientras que el método recursivo utiliza dos funciones, una para recorrer el tablero y otra para eliminar las islas, por lo que se puede decir que el método iterativo es más eficiente que el recursivo para la solución de este problema.
+
+# 5. Introducción a la Inteligencia Artificial: Introspección
