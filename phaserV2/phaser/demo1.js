@@ -171,7 +171,8 @@ function saltar(){
 }
 
 function moverDerecha(){
-    jugador.body.position.x += 5;
+    if( jugador.body.position.x < 100)
+        jugador.body.position.x += 5;
 }
 
 
@@ -217,14 +218,13 @@ function update() {
     }
     
     if( modoAuto == true  && bala.position.x>0 && jugador.body.onFloor()) {
-        if( datosDeEntrenamiento( [despBala , velocidadBala] ) ){
-            saltar();
-        }
-    }
 
-    if( modoAuto == true  && bala2.position.y > 50) {
         if( datosDeEntrenamientoBala2( [despBala2, velocidadBala2] )  ){    
             moverDerecha();
+        }
+
+        if( datosDeEntrenamiento( [despBala , velocidadBala] ) ){
+            saltar();
         }
     }
 
