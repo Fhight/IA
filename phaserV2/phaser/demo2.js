@@ -228,15 +228,12 @@ function update() {
     if( modoAuto == true  && bala.position.x>0 && jugador.body.onFloor()) {
 
         if( datosDeEntrenamientoBala2( [despBala2, velocidadBala2] )  ){   
-            if(despBala2x === 0)
+            
                 moverDerecha2();
         }
 
         if( datosDeEntrenamiento( [despBala , velocidadBala] ) ){
-            if(despBala2x === 0 && despBala2 > 150)
-                saltar();
-            else if(despBala2x > 0)
-                saltar();
+            saltar();
         }
     }
 
