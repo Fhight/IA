@@ -91,7 +91,7 @@ function datosDeEntrenamiento(param_entrada){
     nnSalida = nnNetwork.activate(param_entrada);
     var aire=Math.round( nnSalida[0]*100 );
     var piso=Math.round( nnSalida[1]*100 );
-    console.log("Valor ","En el Aire %: "+ aire + " En el suelo %: " + piso );
+    // console.log("Valor ","En el Aire %: "+ aire + " En el suelo %: " + piso );
     return nnSalida[0]>=nnSalida[1];
 }
 
@@ -100,7 +100,7 @@ function datosDeEntrenamientoBala2(param_entrada){
     nnSalida2 = nnNetwork2.activate(param_entrada);
     var avanzo=Math.round( nnSalida2[0]*100 );
     var quieto=Math.round( nnSalida2[1]*100 );
-    console.log("Valor ","Avanzo %: "+ avanzo + " Quietos %: " + quieto );    
+    // console.log("Valor ","Avanzo %: "+ avanzo + " Quietos %: " + quieto );    
     return nnSalida2[0] >= nnSalida2[1];
 }
 
@@ -172,7 +172,13 @@ function saltar(){
 
 function moverDerecha(){
     if( jugador.body.position.x < 100)
-        jugador.body.position.x += 5;
+        jugador.body.position.x += 10;
+}
+
+function moverDerecha2(){
+    
+    if( jugador.body.position.x < 100)
+        jugador.body.position.x += 20;
 }
 
 
@@ -220,11 +226,12 @@ function update() {
     if( modoAuto == true  && bala.position.x>0 && jugador.body.onFloor()) {
 
         if( datosDeEntrenamientoBala2( [despBala2, velocidadBala2] )  ){    
-            moverDerecha();
+            moverDerecha2();
         }
 
         if( datosDeEntrenamiento( [despBala , velocidadBala] ) ){
             saltar();
+            console.log("Salto", despBala);
         }
     }
 
