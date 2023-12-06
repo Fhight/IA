@@ -362,6 +362,43 @@
 
 ### **Conclusión**
 
-> > Como se puede observar, tanto el método iterativo como el recursivo nos dan el mismo resultado, por lo que se puede decir que ambos métodos son igual de eficientes para la solución de este problema, sin embargo, se puede decir que el método iterativo es más eficiente en cuanto al uso de memoria, ya que este solo utiliza un bucle para recorrer el tablero, mientras que el método recursivo utiliza dos funciones, una para recorrer el tablero y otra para eliminar las islas, por lo que se puede decir que el método iterativo es más eficiente que el recursivo para la solución de este problema.
+> Como se puede observar, tanto el método iterativo como el recursivo nos dan el mismo resultado, por lo que se puede decir que ambos métodos son igual de eficientes para la solución de este problema, sin embargo, se puede decir que el método iterativo es más eficiente en cuanto al uso de memoria, ya que este solo utiliza un bucle para recorrer el tablero, mientras que el método recursivo utiliza dos funciones, una para recorrer el tablero y otra para eliminar las islas, por lo que se puede decir que el método iterativo es más eficiente que el recursivo para la solución de este problema.
 
 # 5. Introducción a la Inteligencia Artificial: Introspección
+
+## Ensayo
+
+### Introducción
+
+> La programación dinámica es una técnica de optimización que se utiliza para resolver problemas complejos dividiéndolos en subproblemas más pequeños. A diferencia de la programación recursiva, que resuelve los subproblemas de manera repetitiva, la programación dinámica resuelve cada subproblema solo una vez y almacena su solución en una tabla para su uso posterior. Este enfoque reduce drásticamente el tiempo de ejecución y la complejidad de la solución, lo que permite abordar problemas que de otro modo serían demasiado complejos para resolverlos de manera eficiente.
+> En este ensayo, se presenta habla acerca de la deteccion de imagenes y como poder identificar a ciertos elementos dentro de ella.
+
+### Desarrollo
+
+> La visión por computadora, una rama de la inteligencia artificial, ha avanzado significativamente en las últimas décadas. Muchas de ellas nos ayudan a interactuar de cierta manera con elementos dentro del ordenador, entre las numerosas bibliotecas disponibles, OpenCV se destaca como una herramienta poderosa y versátil para el procesamiento de imágenes, el cual nos ayuda entre otras cosas a detectar objetos dentro de una imagen, asi como tener un mapeo mas profundo de la misma.
+>
+> **HSV**
+>
+> Al tener como referencia a una imagen que lleve cierto patron de colores en si misma, se puede empezar a analizar el umbral de colores en el cual caen los objetos que queremos identificar. En este caso, se utiliza OpenCV para cargar una imagen que contiene objetos de interés, presumiblemente de color rojo. La imagen se almacena como una matriz de píxeles en formato BGR, el formato convencional para las imágenes en OpenCV.
+>
+> Antes de adentrarnos en la detección de objetos rojos, realizamos una transformación crucial del espacio de color de la imagen de BGR a HSV (Hue-Saturation-Value). El espacio de color HSV (Hue, Saturation, Value) es una representación alternativa a RGB (Red, Green, Blue) que se utiliza comúnmente en visión por computadora y procesamiento de imágenes. A diferencia de RGB, que describe el color en términos de los componentes primarios de luz, HSV representa el color de una manera más intuitiva y cercana a cómo lo percibe el ojo humano.
+>
+> **Componentes de HSV:**
+>
+> > 1.  **Matiz (Hue):** Se refiere al tono del color, representado en un círculo de colores de 0 a 360 grados. Por ejemplo, los colores rojo, verde y azul tienen tonos específicos en este círculo.
+> >
+> > 2.  **Saturación (Saturation):** Indica la intensidad o pureza del color. Una saturación baja resulta en colores más apagados (grises), mientras que una saturación alta indica colores más vívidos.
+> >
+> > 3.  **Valor (Value o Brightness):** Representa la luminosidad del color. Un valor bajo significa un color oscuro, mientras que un valor alto indica un color más claro.
+> >
+> > **Umbralización y máscara:**
+>
+> Con la imagen en el espacio de color HSV establecido en los cuales vamos a tener nuestros objetos, establecemos umbrales para definir el rango de colores que consideraremos que cumplen con el rango de colores que estemos buscando. Estos umbrales se aplican a la imagen HSV mediante la función cv2.inRange(), generando así una máscara binaria que resalta los píxeles que cumplen con los criterios de color, dando como resultado un rango de colores que se encuentran dentro de la imagen.
+>
+> La máscara resultante se utiliza para identificar regiones de interés en la imagen original. La función cv2.findContours() analiza la máscara y devuelve una lista de contornos encontrados. Cada contorno es esencialmente una secuencia de puntos que forman una figura cerrada alrededor del objeto rojo detectado, los cuales son los que nos indica la cantidad de objetos que cumplen con la condicion establecida.
+>
+> **Análisis y Visualización:**
+>
+> Determinamos la cantidad de elementos (contornos) encontrados, lo que nos da una indicación de la presencia y cantidad de objetos rojos en la imagen. Este número se imprime para su referencia.
+>
+> Para destacar visualmente los objetos detectados, dibujamos contornos verdes alrededor de ellos en la imagen original. Esto se logra mediante la función cv2.drawContours(). Finalmente, mostramos la imagen resultante al usuario, ofreciendo una visualización de cómo se han identificado y resaltado los objetos rojos.
