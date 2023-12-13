@@ -412,3 +412,161 @@
 > Determinamos la cantidad de elementos (contornos) encontrados, lo que nos da una indicación de la presencia y cantidad de objetos rojos en la imagen. Este número se imprime para su referencia.
 >
 > Para destacar visualmente los objetos detectados, dibujamos contornos verdes alrededor de ellos en la imagen original. Esto se logra mediante la función cv2.drawContours(). Finalmente, mostramos la imagen resultante al usuario, ofreciendo una visualización de cómo se han identificado y resaltado los objetos rojos.
+
+### **Conclusión**
+
+> Como se puede observar, la detección de objetos dentro de una imagen es un proceso que requiere de un análisis profundo de la misma, ya que se debe tener en cuenta el espacio de color en el cual se encuentran los objetos que se quieren identificar, y a partir de esto, se debe establecer un umbral de colores para poder identificarlos, y así poder tener un mapeo de la imagen y poder identificar los objetos que se encuentran dentro de ella.
+
+# 6. Introducción a la Inteligencia Artificial: El proceso de razonamiento según la lógica
+
+## Planteamiento del problema
+
+> Supongamos que hay n soldados, numerados de 1 a n, atrapados en una situación desesperada durante la guerra judeo-romana. Deciden suicidarse en lugar de ser capturados por el enemigo, pero Josephus propone un método para determinar quién será el último en quitarse la vida.
+>
+> Se ordena a los soldados que se coloquen en un círculo y que se cuenten en voz alta en secuencia, comenzando en el número 1, hasta que se alcance un número k; luego se elimina ese soldado y se comienza a contar nuevamente desde el siguiente soldado. El proceso continúa hasta que solo queda un soldado, que es el que se salva.
+>
+> Por ejemplo, supongamos que hay 5 soldados y k = 2. Los soldados se numeran de 1 a 5 y se colocan en un círculo. Se cuentan en voz alta en secuencia, comenzando en el número 1, hasta que se alcanza el número 2; luego se elimina el soldado número 2 y se comienza a contar nuevamente desde el siguiente soldado.
+>
+> Josephus siempre se sienta en la posición 2^m+1, donde m es el exponente más grande de 2 que es menor o igual a n. Esto se debe a que, siguiendo las reglas de eliminación, después de 2^m pasos, se elimina un soldado y el siguiente soldado en ser eliminado es el que está en la posición 2^m+1.
+>
+> La estrategia óptima para Josephus es identificar el exponente m y sentarse en la posición 2^m+1, garantizando así que sea el último sobreviviente en esta situación extrema.
+
+![Josephus](/img/Josephus.jpg 'Problema de Josephus')
+
+## Solución
+
+> Para la solución de este problema se utilizara el siguiente código:
+
+```python
+# Problema de Josephus
+def josephus(asientos, saltos):
+    saltos -= 1
+    soldado = saltos
+    while len(asientos) > 1:
+        print('Murio: ',asientos.pop(soldado))
+        soldado = (soldado + saltos) % len(asientos)
+    print('survivor: ', asientos[0])
+
+josephus([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,30,31,32,33,34,35,36,37,38,39,40,41], 2)
+```
+
+## Conclusión
+
+> Como se puede observar, la solución de este problema es bastante sencilla, ya que solo se debe tener en cuenta el número de asientos y el número de saltos que se van a realizar, y a partir de esto, se procede a eliminar a los soldados que se encuentran en la posición de los saltos, hasta que solo quede un soldado, el cual será el sobreviviente.
+
+# 7. Introducción a la Inteligencia Artificial: El papel de la heurística
+
+> La heurística es un enfoque o método de resolución de problemas que se basa en reglas prácticas, experiencias previas o intuiciones para encontrar soluciones rápidas y eficientes, aunque no necesariamente garantizan la solución óptima. En lugar de seguir un enfoque algorítmico riguroso, las heurísticas buscan estrategias que, en la mayoría de los casos, conducen a soluciones aceptables o satisfactorias.
+>
+> Papel en la Resolución de Problemas:
+>
+> > 1.  **Eficiencia:**
+> >     Las heurísticas son especialmente útiles en problemas complejos donde la búsqueda exhaustiva de soluciones óptimas podría ser computacionalmente costosa o prácticamente imposible debido al tamaño del espacio de búsqueda.
+> >     Permiten encontrar soluciones en un tiempo razonable al sacrificar la garantía de optimización.
+> >
+> > 2.  **Exploración del espacio de soluciones:**
+> >     En lugar de explorar cada posibilidad de manera exhaustiva, las heurísticas guían la búsqueda hacia áreas más prometedoras del espacio de soluciones.
+> >     Esto es crucial en problemas con un gran número de posibles soluciones, ya que ayuda a reducir la complejidad computacional.
+> >
+> > 3.  **Adaptabilidad:**
+> >     Las heurísticas son flexibles y pueden adaptarse a diferentes tipos de problemas y contextos.
+> >     Pueden ser ajustadas o modificadas según la naturaleza específica de un problema.
+> >
+> > 4.  **Toma de decisiones rápida:**
+> >     En situaciones donde se requiere una toma de decisiones rápida y no hay tiempo para una análisis exhaustivo, las heurísticas ofrecen una solución práctica y rápida.
+> >
+> > 5.  **Soluciones aceptables:**
+> >     Aunque no garantizan la mejor solución posible, las heurísticas tienden a generar soluciones aceptables y satisfactorias en la mayoría de los casos.
+> >     Son particularmente útiles en entornos donde se valora la eficiencia y la toma de decisiones práctica.
+> >
+> > 6.  **Aplicación en problemas del mundo real:**
+> >     En muchos problemas del mundo real, donde las condiciones y restricciones pueden cambiar rápidamente, las heurísticas permiten tomar decisiones informadas sin la necesidad de recalcular constantemente.
+> >
+> > 7.  **Creatividad y innovación:**
+> >     La aplicación de heurísticas a menudo involucra la aplicación creativa de reglas y estrategias, lo que puede llevar a la innovación en la resolución de problemas.
+
+> ## Problema
+>
+> > Realizar un algoritmo que permita recorrer todo un laberinto hasta llegar a la salida, teniendo en cuenta que el laberinto puede tener caminos cerrados, y que el algoritmo debe encontrar la salida de manera rápida y eficiente.
+
+> ## Solución
+>
+> > Para la solución de este problema se utilizara el siguiente código:
+> >
+> > ```python
+> > # Laberinto
+> > laberinto = [
+> >     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+> >     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+> >     [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+> >     [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+> >     [1, 0, 1, 0, 1, 1, 1, 1, 1, 1],
+> >     [1, 0, 1, 0, 1, 0, 0, 0, 0, 1],
+> >     [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
+> >     [1, 0, 1, 0, 1, 0, 1, 0, 0, 1],
+> >     [1, 0, 0, 0, 1, 0, 1, 3, 0, 1],
+> >     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+> > ]
+> >
+> > # Funcion para imprimir el laberinto
+> > def imprimirLaberinto(laberinto):
+> >     for i in range(len(laberinto)):
+> >         for j in range(len(laberinto[i])):
+> >             if laberinto[i][j] == 1:
+> >                 print("█", end="")
+> >             elif laberinto[i][j] == 0:
+> >                 print(" ", end="")
+> >             elif laberinto[i][j] == 2:
+> >                 print("░", end="")
+> >             elif laberinto[i][j] == 3:
+> >                 print("▓", end="")
+> >         print()
+> >
+> > # Funcion para resolver el laberinto
+> > def resolverLaberinto(laberinto, x, y):
+> >     if laberinto[x][y] == 3:
+> >         return True
+> >     if laberinto[x][y] == 1:
+> >         return False
+> >     if laberinto[x][y] == 2:
+> >         return False
+> >     laberinto[x][y] = 2
+> >     if ((x < len(laberinto) - 1 and resolverLaberinto(laberinto, x + 1, y))
+> >             or (y > 0 and resolverLaberinto(laberinto, x, y - 1))
+> >             or (x > 0 and resolverLaberinto(laberinto, x - 1, y))
+> >             or (y < len(laberinto) - 1 and resolverLaberinto(laberinto, x, y + 1))):
+> >         return True
+> >     return False
+> >
+> > # Funcion para encontrar la entrada del laberinto
+> > def encontrarEntrada(laberinto):
+> >     for i in range(len(laberinto)):
+> >         for j in range(len(laberinto[i])):
+> >             if laberinto[i][j] == 2:
+> >                 return i, j
+> >
+> > # Funcion para encontrar la salida del laberinto
+> > def encontrarSalida(laberinto):
+> >     for i in range(len(laberinto)):
+> >         for j in range(len(laberinto[i])):
+> >             if laberinto[i][j] == 3:
+> >                 return i, j
+> >
+> > # Funcion para encontrar el camino de la entrada a la salida del laberinto
+> > def encontrarCamino(laberinto):
+> >     x, y = encontrarEntrada(laberinto)
+> >     resolverLaberinto(laberinto, x, y)
+> >     imprimirLaberinto(laberinto)
+> >
+> > # Funcion para encontrar el camino mas corto de la entrada a la salida del laberinto
+> > def encontrarCaminoCorto(laberinto):
+> >     x, y = encontrarEntrada(laberinto)
+> >     resolverLaberinto(laberinto, x, y)
+> >     imprimirLaberinto(laberinto)
+> >
+> > # Funcion para encontrar el camino mas largo de la entrada a la salida del laberinto
+> > def encontrarCaminoLargo(laberinto):
+> >     x, y = encontrarEntrada(laberinto)
+> >     resolverLaberinto(laberinto, x, y)
+> >     imprimirLaberinto(laberinto)
+> >
