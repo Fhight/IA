@@ -508,65 +508,515 @@ josephus([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18, 19, 20, 21, 22, 23, 24, 
 > >     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 > > ]
 > >
-> > # Funcion para imprimir el laberinto
-> > def imprimirLaberinto(laberinto):
-> >     for i in range(len(laberinto)):
-> >         for j in range(len(laberinto[i])):
-> >             if laberinto[i][j] == 1:
-> >                 print("█", end="")
-> >             elif laberinto[i][j] == 0:
-> >                 print(" ", end="")
-> >             elif laberinto[i][j] == 2:
-> >                 print("░", end="")
-> >             elif laberinto[i][j] == 3:
-> >                 print("▓", end="")
-> >         print()
+> > def resolver_laberinto(laberinto, fila, columna):
+> >         if fila < 0 or columna < 0 or fila >= len(laberinto) or columna >= len(laberinto>>[0]):
+> >            return False
+> >        if laberinto[fila][columna] == 3:
+> >            return True
+> >        if laberinto[fila][columna] == 1 or laberinto[fila][columna] == 4:
+> >            return False
+> >        laberinto[fila][columna] = 4
+> >        if (resolver_laberinto(laberinto, fila + 1, columna) or
+> >            resolver_laberinto(laberinto, fila - 1, columna) or
+> >            resolver_laberinto(laberinto, fila, columna + 1) or
+> >            resolver_laberinto(laberinto, fila, columna - 1)):
+> >            return True
+> >        laberinto[fila][columna] = 0
+> >        return False
+> >    for i in range(len(laberinto)):
+> >        for j in range(len(laberinto[0])):
+> >            if laberinto[i][j] == 2:
+> >                inicio_fila, inicio_columna = i, j
+> >    if resolver_laberinto(laberinto, inicio_fila, inicio_columna):
+> >        print("Se encontró una solución. El laberinto resuelto es:")
+> >        for fila in laberinto:
+> >            print(fila)
+> >    else:
+> >        print("No hay solución para el laberinto.")
 > >
-> > # Funcion para resolver el laberinto
-> > def resolverLaberinto(laberinto, x, y):
-> >     if laberinto[x][y] == 3:
-> >         return True
-> >     if laberinto[x][y] == 1:
-> >         return False
-> >     if laberinto[x][y] == 2:
-> >         return False
-> >     laberinto[x][y] = 2
-> >     if ((x < len(laberinto) - 1 and resolverLaberinto(laberinto, x + 1, y))
-> >             or (y > 0 and resolverLaberinto(laberinto, x, y - 1))
-> >             or (x > 0 and resolverLaberinto(laberinto, x - 1, y))
-> >             or (y < len(laberinto) - 1 and resolverLaberinto(laberinto, x, y + 1))):
-> >         return True
-> >     return False
+> > resolver_laberinto(laberinto, 7, 0)
+> > ```
 > >
-> > # Funcion para encontrar la entrada del laberinto
-> > def encontrarEntrada(laberinto):
-> >     for i in range(len(laberinto)):
-> >         for j in range(len(laberinto[i])):
-> >             if laberinto[i][j] == 2:
-> >                 return i, j
+> > **Explica el funcionamiento del algoritmo**
+>
+> En el codigo anterior se verifica constantemente que la casilla a la cual se esta intentanto acceder sea valida, es decir, que no se encuentre fuera de los limites del laberinto, que no sea una pared, y que no se haya visitado anteriormente, y si se cumple con estas condiciones, se procede a marcar la casilla como visitada, y se procede a verificar si la casilla es la salida, y si es asi, se procede a imprimir el laberinto resuelto, y si no es asi, se procede a verificar si se puede acceder a las casillas adyacentes, y si se puede, se procede a verificar si estas casillas son la salida, y si no lo son, se procede a marcarlas como visitadas, y se continua con el proceso hasta que se encuentre la salida, o hasta que no se pueda acceder a ninguna casilla, y si no se encuentra la salida, se imprime que no se encontro una solucion para el laberinto.
+
+# 8. Reglas y Búsquedas : Espacio de Estados
+
+> 1. El juego consiste en pasar las 3 ranas verdes a la derecha y las 3 ranas marrones a la izquierda. Las ranas pueden saltar a una piedra vacía que tengan delante, o saltar por encima de otra rana si en medio de ambas hay una piedra vacía. Pulsa sobre la rana que quieres que salte.
+>    ![Ranas](/img/Ranas.png 'Problema de las ranas')
+>
+> ## Solución
+>
+> > 1.  | 🟢  | 🟢  | 🟢  | 🔳  | 🟤  | 🟤  | 🟤  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 2.  | 🟢  | 🟢  | 🔳  | 🟢  | 🟤  | 🟤  | 🟤  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 3.  | 🟢  | 🟢  | 🟤  | 🟢  | 🔳  | 🟤  | 🟤  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 4.  | 🟢  | 🟢  | 🟤  | 🟢  | 🟤  | 🔳  | 🟤  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 5.  | 🟢  | 🟢  | 🟤  | 🔳  | 🟤  | 🟢  | 🟤  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 6.  | 🟢  | 🔳  | 🟤  | 🟢  | 🟤  | 🟢  | 🟤  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 7.  | 🔳  | 🟢  | 🟤  | 🟢  | 🟤  | 🟢  | 🟤  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 8.  | 🟤  | 🟢  | 🔳  | 🟢  | 🟤  | 🟢  | 🟤  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 9.  | 🟤  | 🟢  | 🟤  | 🟢  | 🔳  | 🟢  | 🟤  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 10. | 🟤  | 🟢  | 🟤  | 🟢  | 🟤  | 🟢  | 🔳  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 11. | 🟤  | 🟢  | 🟤  | 🟢  | 🟤  | 🔳  | 🟢  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 12. | 🟤  | 🟢  | 🟤  | 🔳  | 🟤  | 🟢  | 🟢  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 13. | 🟤  | 🔳  | 🟤  | 🟢  | 🟤  | 🟢  | 🟢  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 14. | 🟤  | 🟤  | 🔳  | 🟢  | 🟤  | 🟢  | 🟢  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 15. | 🟤  | 🟤  | 🟤  | 🟢  | 🔳  | 🟢  | 🟢  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+> > 16. | 🟤  | 🟤  | 🟤  | 🔳  | 🟢  | 🟢  | 🟢  |
+> >     | --- | --- | --- | --- | --- | --- | --- |
+>
+> 2. Tres misioneros se perdieron explorando una jungla. Separados de sus compañeros, sin alimento y sin radio, solo sabían que para llegar a su destino debían ir siempre hacia adelante. Los tres misioneros se detuvieron frente a un río que les bloqueaba el paso, preguntándose que podían hacer. De repente, aparecieron tres caníbales llevando un bote, pues también ellos querían cruzar el río. Ya anteriormente se habían encontrado grupos de misioneros y caníbales, y cada uno respetaba a los otros, pero sin confiar en ellos. Los caníbales se daban un festín con los misioneros cuando les superaban en número. Los tres caníbales deseaban ayudar a los misioneros a cruzar el río, pero su bote no podía llevar más de dos personas a la vez y los misioneros no querían que los caníbales les superaran en número. ¿Cómo puede resolverse el problema, sin que en ningún momento haya más caníbales que misioneros en cualquier orilla del río? recuerda que un misionero y un caníbal en una orilla del río más uno o dos caníbales en el bote al mismo lado, significa que los misioneros tendrán problemas.
+>    ![Misioneros](/img/Misioneros.png 'Problema de los misioneros')
+>
+> ## Solución
+>
+> 🟤 = Canival
+> ⚫ = Misionero
+>
+> > 1.  | ⚫ ⚫ ⚫ 🟤 🟤 🟤 🛶 | 🌊  |     |
+> >     | -------------------- | --- | --- |
+> > 2.  | ⚫ ⚫ ⚫ 🟤 | 🌊  | 🛶 🟤 🟤 |
+> >     | ----------- | --- | -------- |
+> > 3.  | ⚫ ⚫ ⚫ 🟤🟤🛶 | 🌊  | 🟤  |
+> >     | --------------- | --- | --- |
+> > 4.  | ⚫ ⚫ ⚫ | 🌊  | 🛶 🟤 🟤🟤 |
+> >     | -------- | --- | ---------- |
+> > 5.  | ⚫ ⚫ ⚫🟤🛶 | 🌊  | 🟤🟤 |
+> >     | ------------ | --- | ---- |
+> > 6.  | ⚫🟤 | 🌊  | 🛶 🟤🟤⚫ ⚫ |
+> >     | ---- | --- | ------------ |
+> > 7.  | ⚫🟤🟤⚫🛶 | 🌊  | 🟤 ⚫ |
+> >     | ---------- | --- | ----- |
+> > 8.  | 🟤🟤 | 🌊  | 🟤 ⚫⚫ ⚫🛶 |
+> >     | ---- | --- | ------------ |
+> > 9.  | 🟤🟤🟤 🛶 | 🌊  | ⚫⚫ ⚫ |
+> >     | --------- | --- | ------- |
+> > 10. | 🟤  | 🌊  | 🟤🟤 🛶 ⚫⚫ ⚫ |
+> >     | --- | --- | --------------- |
+> > 11. | 🟤 🟤 🛶 | 🌊  | 🟤 ⚫⚫ ⚫ |
+> >     | -------- | --- | ---------- |
+> > 12. |     | 🌊  | 🟤 🟤 🛶🟤 ⚫⚫ ⚫ |
+> >     | --- | --- | ------------------ |
+
+# 9. Generación de Dataset
+
+> Generar un dataset de rostros por lo menos 5 diferentes, y entrenar un modelo de reconocimiento de rostros con el dataset generado.
+>
+> ## Cascade
+>
+> > ```python
+> > #Tomar fotos para el dataset, presionar s para guardar la imagen
+> > import numpy as np
+> > import cv2 as cv
+> > import math
 > >
-> > # Funcion para encontrar la salida del laberinto
-> > def encontrarSalida(laberinto):
-> >     for i in range(len(laberinto)):
-> >         for j in range(len(laberinto[i])):
-> >             if laberinto[i][j] == 3:
-> >                 return i, j
+> > cap = cv.VideoCapture(0)
+> > i=0
+> > while True:
+> >    ret, frame = cap.read()
 > >
-> > # Funcion para encontrar el camino de la entrada a la salida del laberinto
-> > def encontrarCamino(laberinto):
-> >     x, y = encontrarEntrada(laberinto)
-> >     resolverLaberinto(laberinto, x, y)
-> >     imprimirLaberinto(laberinto)
+> > frame = cv.rectangle(frame, (100,100), (400, 400), (255,0,0), 1)
+> > frame2 = frame[100:400, 100:400]
+> > frame4 = cv.resize(frame, (1050,1630))
+> > frame5 = cv.resize(frame2, (780,540), interpolation= cv.INTER_LINEAR)
+> > cv.imshow('frame', frame)
+> > cv.imshow('dataset', frame2)
+> > k = cv.waitKey(1)
+> > if k == ord('p'):
+> >     i=i+1
+> >     cv.imwrite('D:/Descargas/Fotos/p/'+str(i)+'new.jpg', frame2)
+> > if k == ord('n'):
+> >     i=i+1
+> >     cv.imwrite('D:/Descargas/Fotos/n/'+str(i)+'new.jpg', frame2)
+> > if k == 27:
+> >     break
+> > cap.release()
+> > cv.destroyAllWindows()
+> > ```
 > >
-> > # Funcion para encontrar el camino mas corto de la entrada a la salida del laberinto
-> > def encontrarCaminoCorto(laberinto):
-> >     x, y = encontrarEntrada(laberinto)
-> >     resolverLaberinto(laberinto, x, y)
-> >     imprimirLaberinto(laberinto)
+> > ```python
+> > #Programa para ejecutar el cascade generado
+> > import numpy as np
+> > import cv2 as cv
 > >
-> > # Funcion para encontrar el camino mas largo de la entrada a la salida del laberinto
-> > def encontrarCaminoLargo(laberinto):
-> >     x, y = encontrarEntrada(laberinto)
-> >     resolverLaberinto(laberinto, x, y)
-> >     imprimirLaberinto(laberinto)
+> > rostro = cv.CascadeClassifier('./cascade3.xml')
 > >
+> > cap = cv.VideoCapture(0)
+> > x=y=w=h= 0
+> > img = 0
+> > count = 0
+> > while True:
+> >     ret, frame = cap.read()
+> >     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+> >     rostros = rostro.detectMultiScale(gray, 1.5, 30)
+> >     for(x, y, w, h) in rostros:
+> >         m= int(h/2)
+> >         frame = cv.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 2)
+> >
+> >     cv.imshow('rostros', frame)
+> >
+> >     k = cv.waitKey(1)
+> >     if k == 27:
+> >         break
+> > cap.release()
+> > cv.destroyAllWindows()
+> > ```
+>
+> ## Phaser
+>
+> > ```JavaScript
+> > //Programa para ejecutar el Phaser
+> > var w=800;
+> > var h=400;
+> > var jugador;
+> > var fondo;
+> > var newGame = true;
+> >
+> > var bala, balaD=false, nave;
+> > var bala2, balaD2 = false, nave2;
+> > //Direccion 1=izquierda 2=derecha
+> > var salto, izquierda, derecha, direccion = 1;
+> > var menu;
+> >
+> > var velocidadBala;
+> > var despBala;
+> > var velocidadBala2 = 203;
+> > var despBala2;
+> > var despBala2x;
+> > var estatusAire;
+> > var estatuSuelo;
+> > var avanzo;
+> > var quieto;
+> > var nnNetwork2 , nnEntrenamiento2, nnSalida2, datosEntrenamiento2=[];
+> > var nnNetwork , nnEntrenamiento, nnSalida, datosEntrenamiento=[];
+> > var modoAuto = false, eCompleto=false;
+> >
+> >
+> >
+> > var juego = new Phaser.Game(w, h, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render:render});
+> >
+> > function preload() {
+> >    juego.load.image('fondo', 'assets/game/fondo.jpg');
+> >    juego.load.spritesheet('mono', 'assets/sprites/altair.png',32 ,48);
+> >    juego.load.image('nave', 'assets/game/ufo.png');
+> >    juego.load.image('bala', 'assets/sprites/purple_ball.png');
+> >    juego.load.image('menu', 'assets/game/menu.png');
+> >
+> > }
+> >
+> > function create() {
+> >
+> >    juego.physics.startSystem(Phaser.Physics.ARCADE);
+> >    juego.physics.arcade.gravity.y = 800;
+> >    juego.time.desiredFps = 30;
+> >
+> >    fondo = juego.add.tileSprite(0, 0, w, h, 'fondo');
+> >    nave = juego.add.sprite(w-100, h-70, 'nave');
+> >    nave2 = juego.add.sprite(20, h-400, 'nave');
+> >    bala = juego.add.sprite(w-100, h, 'bala');
+> >    bala2 = juego.add.sprite(55, h-350, 'bala');
+> >    jugador = juego.add.sprite(50, h, 'mono');
+> >
+> >
+> >    juego.physics.enable(jugador);
+> >    jugador.body.collideWorldBounds = true;
+> >    var corre = jugador.animations.add('corre',[8,9,10,11]);
+> >    jugador.animations.play('corre', 10, true);
+> >
+> >    juego.physics.enable(bala);
+> >    bala.body.collideWorldBounds = true;
+> >
+> >    juego.physics.enable(bala2);
+> >    bala2.body.collideWorldBounds = true;
+> >
+> >    pausaL = juego.add.text(w - 100, 20, 'Pausa', { font: '20px Arial', fill: '#fff' });
+> >    pausaL.inputEnabled = true;
+> >    pausaL.events.onInputUp.add(pausa, self);
+> >    juego.input.onDown.add(mPausa, self);
+> >
+> >    salto = juego.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+> >    izquierda = juego.input.keyboard.addKey(Phaser.Keyboard.A)
+> >    derecha = juego.input.keyboard.addKey(Phaser.Keyboard.D)
+> >
+> >    nnNetwork =  new synaptic.Architect.Perceptron(2, 6, 6, 2);
+> >     nnEntrenamiento = new synaptic.Trainer(nnNetwork);
+> >
+> >     nnNetwork2 =  new synaptic.Architect.Perceptron(2, 6, 6, 2);
+> >     nnEntrenamiento2 = new synaptic.Trainer(nnNetwork2);
+> >
+> > }
+> >
+> > function enRedNeural(){
+> >     nnEntrenamiento.train(datosEntrenamiento, {rate: 0.0003, iterations: 10000, shuffle: true});
+> > }
+> >
+> > function redNeuronalAvanzar(){
+> >     nnEntrenamiento2.train(datosEntrenamiento2, {rate: 0.0003, iterations: 10000, shuffle: true});
+> > }
+> >
+> > function datosDeEntrenamiento(param_entrada){
+> >
+> >     // console.log("Entrada",param_entrada[0]+" "+param_entrada[1]);
+> >     nnSalida = nnNetwork.activate(param_entrada);
+> >     var aire=Math.round( nnSalida[0]*100 );
+> >     var piso=Math.round( nnSalida[1]*100 );
+> >     // console.log("Valor ","En el Aire %: "+ aire + " En el suelo %: " + piso );
+> >     return nnSalida[0]>=nnSalida[1];
+> > }
+> >
+> > function datosDeEntrenamientoBala2(param_entrada){
+> >     // console.log("Entrada2",param_entrada[0]);
+> >     nnSalida2 = nnNetwork2.activate(param_entrada);
+> >     var avanzo=Math.round( nnSalida2[0]*100 );
+> >     var quieto=Math.round( nnSalida2[1]*100 );
+> >     // console.log("Valor ","Avanzo %: "+ avanzo + " Quietos %: " + quieto );
+> >     return nnSalida2[0] >= nnSalida2[1];
+> > }
+> >
+> >
+> >
+> > function pausa(){
+> >     juego.paused = true;
+> >     menu = juego.add.sprite(w/2,h/2, 'menu');
+> >     menu.anchor.setTo(0.5, 0.5);
+> > }
+> >
+> > function mPausa(event){
+> >     if(juego.paused){
+> >         var menu_x1 = w/2 - 270/2, menu_x2 = w/2 + 270/2,
+> >             menu_y1 = h/2 - 180/2, menu_y2 = h/2 + 180/2;
+> >
+> >         var mouse_x = event.x  ,
+> >             mouse_y = event.y  ;
+> >
+> >         if(mouse_x > menu_x1 && mouse_x < menu_x2 && mouse_y > menu_y1 && mouse_y < menu_y2 ){
+> >             if(mouse_x >=menu_x1 && mouse_x <=menu_x2 && mouse_y >=menu_y1 && mouse_y <=menu_y1+90){
+> >                 eCompleto=false;
+> >                 datosEntrenamiento = [];
+> >                 datosEntrenamiento2 = [];
+> >                 modoAuto = false;
+> >                 newGame = true;
+> >             }else if (mouse_x >=menu_x1 && mouse_x <=menu_x2 && mouse_y >=menu_y1+90 && mouse_y <=menu_y2) {
+> >                 newGame = true;
+> >                 if(!eCompleto) {
+> >                     console.log('entrenamiento: ', datosEntrenamiento.length)
+> >                     console.log('entrenamiento2: ', datosEntrenamiento2.length)
+> >                     enRedNeural();
+> >                     redNeuronalAvanzar();
+> >                     eCompleto=true;
+> >                 }
+> >                 modoAuto = true;
+> >             }
+> >
+> >             menu.destroy();
+> >             resetVariables();
+> >             juego.paused = false;
+> >
+> >         }
+> >     }
+> > }
+> >
+> >
+> > function resetVariables(){
+> >     jugador.body.velocity.x=0;
+> >     jugador.body.velocity.y=0;
+> >     jugador.body.position.x = 50;
+> >
+> >     bala.body.velocity.x = 0;
+> >     bala.position.x = w-100;
+> >
+> >     bala2.body.velocity.y = velocidadBala2;
+> >     bala2.position.y = h-350;
+> >     // bala2.body.velocity.y = velocidadBala2;
+> >     // bala2.position.y = h-350;
+> >     // bala2.position.x = jugador.position.x + Math.random(-1, 1);
+> >     balaD2=false;
+> >     balaD=false;
+> >     // balaD2=false;
+> > }
+> >
+> > function saltar(){
+> >     jugador.body.velocity.y = -270;
+> > }
+> >
+> > function moverDerecha(){
+> >     if( jugador.body.position.x < 100)
+> >         jugador.body.position.x += 10;
+> > }
+> >
+> > function moverDerecha2(){
+> >
+> >     if( jugador.body.position.x < 100)
+> >         jugador.body.position.x += 20;
+> > }
+> >
+> >
+> > function update() {
+> >
+> >     if(newGame){
+> >         newGame = false;
+> >         jugador.body.position.x = 50;
+> >         nave2.position.x = 50;
+> >         bala2.position.x = 50;
+> >         bala2.position.y = h-350;
+> >     }
+> >
+> >     fondo.tilePosition.x -= 1;
+> >
+> >     juego.physics.arcade.collide(bala, jugador, colisionH, null, this);
+> >     juego.physics.arcade.collide(bala2, jugador, colisionH, null, this);
+> >
+> >     estatuSuelo = 1;
+> >     estatusAire = 0;
+> >     avanzo = 0;
+> >     quieto = 1;
+> >
+> >     if(!jugador.body.onFloor()) {
+> >         estatuSuelo = 0;
+> >         estatusAire = 1;
+> >     }
+> >     if( jugador.body.position.x > 50){
+> >         avanzo = 1;
+> >         quieto = 0;
+> >     }
+> > 	bala2.body.velocity.y = velocidadBala2;
+> >     despBala = Math.floor( jugador.position.x - bala.position.x );
+> >     //Devuelve cuanto falta para que la bala impacte al jugador
+> >     despBala2 = Math.floor( jugador.position.y - bala2.position.y );
+> >     despBala2x = Math.floor( jugador.position.x - bala2.position.x );
+> >
+> >     if( modoAuto==false && derecha.isDown &&  jugador.body.onFloor() ){
+> >         moverDerecha();
+> >     }
+> >
+> >     if( modoAuto==false && salto.isDown &&  jugador.body.onFloor() ){
+> >         saltar();
+> >     }
+> >
+> >     if( modoAuto == true  && bala.position.x>0 && jugador.body.onFloor()) {
+> >
+> >         if( datosDeEntrenamientoBala2( [despBala2, velocidadBala2] )  ){
+> >             if(despBala2x === 0)
+> >                moverDerecha2();
+> >         }
+> >
+> >         if( datosDeEntrenamiento( [despBala , velocidadBala] ) ){
+> >             if(despBala2x === 0 && despBala2 > 150)
+> >                 saltar();
+> >             else if(despBala2x > 0)
+> >                 saltar();
+> >         }
+> >     }
+> >
+> >     if( balaD==false ){
+> >         disparo();
+> >     }
+> >
+> >     if( bala.position.x <= 0  ){
+> >         resetVariables();
+> >     }
+> >
+> >     if( balaD2==false ){
+> >         disparo2();
+> >     }
+> >
+> >     if( modoAuto ==false  && bala.position.x > 0 ){
+> >
+> >         datosEntrenamiento.push({
+> >                 'input' :  [despBala , velocidadBala],
+> >                 'output':  [estatusAire , estatuSuelo]
+> >         });
+> >    }
+> >
+> >    if( modoAuto == false && bala2.position.y > 50 ){
+> >         datosEntrenamiento2.push({
+> >                 'input' :  [despBala2, velocidadBala2],
+> >                 'output':  [avanzo, quieto]
+> >         });
+> >    }
+> > }
+> >
+> >
+> > function disparo(){
+> >     velocidadBala =  -1 * velocidadRandom(300,400);
+> >     bala.body.velocity.y = 0 ;
+> >     bala.body.velocity.x = velocidadBala ;
+> >    balaD=true;
+> >    balaD2=true;
+> > }
+> >
+> > function disparo2(){
+> >    bala2.body.velocity.y = velocidadBala2;
+> >    balaD2=true;
+> > }
+> >
+> > function colisionH(){
+> >    pausa();
+> > }
+> >
+> > function velocidadRandom(min, max) {
+> >    return Math.floor(Math.random() * (max - min + 1)) + min;
+> > }
+> >
+> > function render(){
+> >
+> > }
+> >
+> > ```
+>
+> ## CNN
+>
+> Dataset creado para identificar y clasificar a flores de tipo Astilbe, Iris, Rosa, Girasol y Tulipan.
+> ![CNN](/img/CNN_1.png 'CNN') ![CNN](/img/CNN_2.png 'CNN') ![CNN](/img/CNN_3.png 'CNN') ![CNN](/img/CNN_4.png 'CNN')
+> Programa para ejecutar el modelo entrenado
+>
+> > ```python
+> > from matplotlib import pyplot as plt
+> > from skimage.transform import resize
+> > import tensorflow as tf
+> > from tensorflow.keras.preprocessing import image
+> > import numpy as np
+> >
+> > modelpath = './Flores.h5py'
+> > model = tf.keras.models.load_model(modelpath)
+> >
+> > target_size = (28, 28)
+> > img_path = './Tulipan.jpg'
+> >
+> > # Load and resize the image
+> > img = image.load_img(img_path, target_size=target_size)
+> > img_array = image.img_to_array(img)
+> > img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+> >
+> > # Normalize pixel values to be between 0 and 1
+> > img_array /= 255.0
+> >
+> > # Make predictions
+> > predictions = model.predict(img_array)
+> > class_names = ['astilbe', 'iris', 'roses', 'sunflowers', 'tulip']
+> >
+> > predicted_class = np.argmax(predictions, axis=1)
+> > predicted_label = class_names[predicted_class[0]]
+> >
+> > # Display the image and predicted label
+> > plt.imshow(img)
+> > plt.title(f'Predicted Label: {predicted_label}')
+> > plt.show()
+> >
+> > ```
